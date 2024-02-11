@@ -79,6 +79,9 @@ public entry fun create_task(account: &signer, content: String) acquires TodoLis
         // update task as completed
         task_record.completed = true;
     }
+//let choose = randomness::u64_range(min_incl: u64, max_excl: u64);, use this line to make a function that returns a random task id, continuously call this function until a task is found that is not completed, then after the task is found, return the task content
+
+
     
 #[test(admin = @0x123)]
 public entry fun test_flow(admin: signer) acquires TodoList {

@@ -8,6 +8,9 @@ use aptos_framework::account;
 use std::string::String; // already have it, need to modify
 #[test_only]
 use std::string; 
+use aptos_framework::randomness;
+
+
 
 const E_NOT_INITIALIZED: u64 = 1;
 const ETASK_DOESNT_EXIST: u64 = 2;
@@ -79,6 +82,26 @@ public entry fun create_task(account: &signer, content: String) acquires TodoLis
         // update task as completed
         task_record.completed = true;
     }
+//make a function that returns a random task id, continuously call this function until a task is found that is not completed, then after the task is found, return the task content
+public entry fun get_random_task(account: &signer) :String acquires TodoList {
+    // gets the signer address
+    let signer_address = signer::address_of(account);
+    // assert signer has created a list
+    assert!(exists<TodoList>(signer_address), 1);
+    // gets the TodoList resource
+    let todo_list = borrow_global_mut<TodoList>(signer_address);
+    // assert task exists
+    assert!(todo_list.task_counter > 0, 2);
+    let task_id = randomness::u64_range(1, todo_list.task_counter + 1);
+    // gets the task matched the task_id
+    let task_record = table::borrow_mut(&mut todo_list.tasks, task_id);
+    // assert task is not completed
+    assert!(task_record.completed == false, 3);
+    // return the task content
+    task_record.content
+
+}
+
     
 #[test(admin = @0x123)]
 public entry fun test_flow(admin: signer) acquires TodoList {

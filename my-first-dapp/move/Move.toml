@@ -4,12 +4,12 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-todolist_addr='${REACT_APP_CONTRACT_ID}'
+todolist_addr='0xec49f014dc62e54be62307770c05a1bff078e49ac5ca902d716984a3fa9c4985'
 [dev-addresses]
 
 [dependencies.AptosFramework]
 git = "https://github.com/aptos-labs/aptos-core.git"
-rev = "mainnet"
+rev = "randomnet"
 subdir = "aptos-move/framework/aptos-framework"
 
 [dev-dependencies]
